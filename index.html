@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Happy Coding!</title>
+	<link rel="shortcut icon" href="fevi.png" type="image/png" />
+	<style>
+	#cvs {
+		position: relative;
+		display: block;
+		margin: 0 !important;
+		padding: 0 !important;
+		background: #eee;
+		float: left;
+		clear: both;
+	}
+	.canv {
+		position: relative;
+		display: block;
+		width: auto;
+		height: auto;
+		min-width: 400px !important;
+		min-height: 560px !important;
+		max-width: 100% !important;
+		max-height: 100% !important;
+		margin: 0;
+		padding: 0;
+		background: #eee;
+		box-shadow: 0 0 20px #888;
+		overflow: hidden;
+		cursor: auto;
+	}
+	.canv.start {
+		cursor: none;
+	}
+	.canv.end {
+		cursor: auto;
+	}
+	.canv>p {
+		background: transparent;
+		position: absolute;
+		display: block;
+		top: 75%;
+		left: 0;
+		width: 100%;
+		height: auto;
+		text-align: center;
+		font-family: sans-serif;
+		font-style: italic;
+		font-size: 16px;
+		font-weight: 200;
+		opacity: 0;
+		text-shadow: 0 0 5px #888;
+		-webkit-transition: opacity .7s ease 1s;
+		   -moz-transition: opacity .7s ease 1s;
+		    -ms-transition: opacity .7s ease 1s;
+		     -o-transition: opacity .7s ease 1s;
+		        transition: opacity .7s ease 1s;/**/
+	}
+	.canv>p#clicker {
+		top:30%;
+		opacity: 1 !important;
+	}
+	.canv>svg {
+		background: transparent;
+		position: absolute;
+		display: block;
+		bottom: 5%;
+		left: 50%;
+		width: 60px;
+		height: 60px;
+		margin-left: -30px;
+		opacity: 0;
+		-webkit-transition: opacity .7s ease 0s;
+		   -moz-transition: opacity .7s ease 0s;
+		    -ms-transition: opacity .7s ease 0s;
+		     -o-transition: opacity .7s ease 0s;
+		        transition: opacity .7s ease 0s;		
+	}
+	.canv>img {
+		background: transparent;
+		position: absolute;
+		display: block;
+		bottom: 5%;
+		left: 50%;
+		width: 60px;
+		height: 60px;
+		margin-left: -30px;
+		cursor: pointer;
+		z-index: -10;
+		opacity: 0;
+		-webkit-transition: opacity .7s ease 20s;
+		   -moz-transition: opacity .7s ease 20s;
+		    -ms-transition: opacity .7s ease 20s;
+		     -o-transition: opacity .7s ease 20s;
+		        transition: opacity .7s ease 20s;		
+	}
+	.canv>pre {
+		background-image: url(Mask.png);
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: contain;
+		background-color: transparent;
+		position: absolute;
+		display: block;
+		top: 50%;
+		left: 50%;
+		width: 430px;
+		height: 430px;
+		margin-top: -215px;
+		margin-left: -215px;
+		cursor: auto;
+		opacity: 0;
+		-webkit-transition: opacity .5s linear 0s;
+		   -moz-transition: opacity .5s linear 0s;
+		    -ms-transition: opacity .5s linear 0s;
+		     -o-transition: opacity .5s linear 0s;
+		        transition: opacity .5s linear 0s;		
+	}
+	.canv>div {
+		background-image: url(ASBMF.png);
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: contain;
+		background-color: transparent;
+		position: absolute;
+		display: block;
+		top: 35%;
+		left: 0;
+		width: 100%;
+		height: 30%;
+		opacity: 0;
+		/*-webkit-transition: opacity 1.5s ease 1s;
+		   -moz-transition: opacity 1.5s ease 1s;
+		    -ms-transition: opacity 1.5s ease 1s;
+		     -o-transition: opacity 1.5s ease 1s;
+		        transition: opacity 1.5s ease 1s;*/
+	}
+	.canv.open>div{
+		opacity: 1;
+		-webkit-transition: opacity 1.5s ease 1s;
+		   -moz-transition: opacity 1.5s ease 1s;
+		    -ms-transition: opacity 1.5s ease 1s;
+		     -o-transition: opacity 1.5s ease 1s;
+		        transition: opacity 1.5s ease 1s;
+	}
+	.canv.open>p, .canv.open>svg {
+	/*.canv>div, .canv>p, .canv>svg {*/
+		/*-webkit-transition: opacity .5s ease 2s;
+		   -moz-transition: opacity .5s ease 2s;
+		    -ms-transition: opacity .5s ease 2s;
+		     -o-transition: opacity .5s ease 2s;
+		        transition: opacity .5s ease 2s;*/
+		opacity: 1;
+	}
+	.canv.start>div {
+		opacity: 0;
+		-webkit-transition: opacity 1.5s ease 1.5s;
+		   -moz-transition: opacity 1.5s ease 1.5s;
+		    -ms-transition: opacity 1.5s ease 1.5s;
+		     -o-transition: opacity 1.5s ease 1.5s;
+		        transition: opacity 1.5s ease 1.5s;
+	}
+	.canv.restart>div {
+		opacity: 0;
+		background-image: url(Type.png);
+		-webkit-transition: opacity .5s ease 0s;
+		   -moz-transition: opacity .5s ease 0s;
+		    -ms-transition: opacity .5s ease 0s;
+		     -o-transition: opacity .5s ease 0s;
+		        transition: opacity .5s ease 0s;
+	}
+	.canv.restart>p, .canv.restart>svg {
+		opacity: 0;
+	}
+	.canv.start>p, .canv.start>svg {
+		-webkit-transition: opacity .7s ease 2s;
+		   -moz-transition: opacity .7s ease 2s;
+		    -ms-transition: opacity .7s ease 2s;
+		     -o-transition: opacity .7s ease 2s;
+		        transition: opacity .7s ease 2s;
+		opacity: 0;
+	}
+	/*.canv.start>svg {
+		display: none;
+	}*/
+	.canv.end>div {
+		background-image: url(Type.png);
+		-webkit-transition: opacity 1.5s ease 13s;
+		   -moz-transition: opacity 1.5s ease 13s;
+		    -ms-transition: opacity 1.5s ease 13s;
+		     -o-transition: opacity 1.5s ease 13s;
+		        transition: opacity 1.5s ease 13s;
+		opacity: 1;
+	}
+	.canv.end>p, .canv.end>svg  {
+		opacity: 0;
+		/*display: none;*/
+	}
+	.canv.end>img  {
+		opacity: 1;
+		z-index: 10;
+	}
+	.canv.end>pre  {
+		-webkit-transition: opacity 7s linear 2s;
+		   -moz-transition: opacity 7s linear 2s;
+		    -ms-transition: opacity 7s linear 2s;
+		     -o-transition: opacity 7s linear 2s;
+		        transition: opacity 7s linear 2s;	
+		opacity: 1;
+		/*display: block;*/
+	}
+	body {
+		display: block;
+		position: relative;
+		width: auto;
+		height: auto;
+		min-width: 400px !important;
+		min-height: 560px !important;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background: #fff;
+	}
+	@media screen and (min-width:1401px) {
+		.canv {
+			/*width: 1400px;*/
+			max-width: 1400px;
+			margin: 0 auto;
+		}
+	}
+	@media screen and (min-height: 1040px) and (min-width:1401px) {
+		.canv {
+			/*width: 1400px;*/
+			max-height: 1000px;
+			margin: 20px auto;
+		}
+	}
+	/*@media screen and (max-width:400px) {
+		body {
+			overflow-x: auto;
+		}
+	}
+	@media screen and (max-height:560px) {
+		body {
+			overflow-y: auto;
+		}
+	}*/
+	</style>
+</head>
+<body id="bd">
+<div class="canv" id="canvdiv">
+	<canvas id="cvs"></canvas>
+	<pre></pre>
+	<div></div>
+	<p>Get your headphones jacked. Press F11 to go fullscreen.</p>
+	<p id="clicker">Click anywhere to begin.</p>
+	<svg width="45" height="45" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" stroke="#000">
+	    <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
+	        <circle cx="22" cy="22" r="6" stroke-opacity="0">
+	            <animate attributeName="r"
+	                 begin="1.5s" dur="3s"
+	                 values="6;22"
+	                 calcMode="linear"
+	                 repeatCount="indefinite" />
+	            <animate attributeName="stroke-opacity"
+	                 begin="1.5s" dur="3s"
+	                 values="1;0" calcMode="linear"
+	                 repeatCount="indefinite" />
+	            <animate attributeName="stroke-width"
+	                 begin="1.5s" dur="3s"
+	                 values="2;0" calcMode="linear"
+	                 repeatCount="indefinite" />
+	        </circle>
+	        <circle cx="22" cy="22" r="6" stroke-opacity="0">
+	            <animate attributeName="r"
+	                 begin="3s" dur="3s"
+	                 values="6;22"
+	                 calcMode="linear"
+	                 repeatCount="indefinite" />
+	            <animate attributeName="stroke-opacity"
+	                 begin="3s" dur="3s"
+	                 values="1;0" calcMode="linear"
+	                 repeatCount="indefinite" />
+	            <animate attributeName="stroke-width"
+	                 begin="3s" dur="3s"
+	                 values="2;0" calcMode="linear"
+	                 repeatCount="indefinite" />
+	        </circle>
+	        <circle cx="22" cy="22" r="8">
+	            <animate attributeName="r"
+	                 begin="0s" dur="1.5s"
+	                 values="6;1;2;3;4;5;6"
+	                 calcMode="linear"
+	                 repeatCount="indefinite" />
+	        </circle>
+	    </g>
+	</svg>
+	<img src="FAB.png" alt="Replay" title="Play Again" id="rep">
+</div>
+
+<!-- <div id="audio_box"></div> -->
+
+<script>
+
+var dn = false, canvdiv = document.getElementById('canvdiv');
+var im1 = new Image();
+im1.src = 'ASBMF.png';
+im1.onload = function (e) {
+	canvdiv.className = 'canv open';
+};
+
+var im2 = new Image();
+im2.src = 'Type.png';
+var im3 = new Image();
+im3.src = 'Mask.png';
+var nav = document.getElementById('prognav');
+
+// console.dir(canvdiv);
+// var strt = setTimeout(function (a) {
+// 	canvdiv.className = 'canv open start';
+// },5000);
+// var wish = setTimeout(function (a) {
+// 	canvdiv.className = 'canv end';
+// },9000);
+
+function theStart() {
+	canvdiv.className = 'canv open start';
+	dn = false;
+}
+
+function theEnd() {
+	canvdiv.className = 'canv end';
+	dn = true;
+}
+
+var rep = document.getElementById('rep');
+rep.addEventListener('click', function (e) {
+	// alert('replay!');
+	playAnimation();
+	canvdiv.className = 'canv open restart';
+},false);
+
+</script>
+<script src="Math.easing.js"></script>
+<script src="big_p_180.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
